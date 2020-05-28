@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tftpd
+  name: tftpd
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 69	
+    protocol: UDP
+  selector:
+    app: tftpd

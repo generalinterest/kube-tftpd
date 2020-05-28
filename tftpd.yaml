@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tftpd
+  labels:
+    app: tftpd
+spec:
+  containers:
+  - image:  busybox
+    command:
+      - udpsvd
+    args: ["-Ev", "0.0.0.0",  "69", "tftpd", "/var/lib/tftpboot/"]
+    imagePullPolicy: IfNotPresent
+    name: tftpd
+    volumeMounts:
+    - mountPath: /var/lib/tftpboot/
+      name: tftpboot
+  restartPolicy: Never
+#  restartPolicy: Always
+  volumes:
+  - name: tftpboot
+    nfs:
+      path: /mnt/nfs/pvdata/tftpboot
+      server: MY.NFS.FQDN
